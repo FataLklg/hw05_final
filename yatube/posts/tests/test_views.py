@@ -304,7 +304,6 @@ class PostViewsTests(TestCase):
                 kwargs={'username': PostViewsTests.user}
             )
         )
-        print(PostViewsTests.user_2.follower.filter(author=PostViewsTests.user))
         response = self.authorized_client2.get(
             reverse(
                 'posts:follow_index'
