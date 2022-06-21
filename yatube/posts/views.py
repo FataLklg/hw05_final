@@ -31,11 +31,11 @@ def profile(request, username):
     profile_posts = username.posts.all()
     count_posts = profile_posts.count()
     page_obj = paginator(request, profile_posts)
-    following = ''
-    if request.user.is_authenticated:
-        following = (
-            Follow.objects.filter(user=request.user, author=username).exists()
-        )
+    following = (
+        request.user.is_authenticated and Follow.objects.filter(
+            user=request.user, author=username
+        ).exists()
+    )
     context = {
         'username': username,
         'profile_posts': profile_posts,
@@ -141,6 +141,5 @@ def profile_unfollow(request, username):
     # Отписка от автора
     author = get_object_or_404(User, username=username)
     follow = Follow.objects.filter(user=request.user, author=author)
-    if follow.exists():
-        follow.delete()
+    follow.delete()
     return redirect('posts:profile', username=author)

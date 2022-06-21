@@ -56,6 +56,10 @@ class PostViewsTests(TestCase):
                 )
             )
         Post.objects.bulk_create(posts_list)
+        cls.follow = Follow.objects.create(
+            user=cls.user_2,
+            author=cls.user_3
+        )
         cls.post = Post.objects.all()
         cls.comment = Comment.objects.all()
 
@@ -285,8 +289,8 @@ class PostViewsTests(TestCase):
         )
         self.assertEqual(response.content, response2.content)
 
-    def test_user_can_follow_and_unfollow(self):
-        """Авторизованный пользователь может подписываться и отписываться"""
+    def test_user_can_follow(self):
+        """Авторизованный пользователь может подписываться"""
         self.authorized_client2.get(
             reverse(
                 'posts:profile_follow',
@@ -322,11 +326,14 @@ class PostViewsTests(TestCase):
         context_user3 = response_unfollow.context['page_obj']
         # Сравнение контекста подписанного/неподписанного пользователя
         self.assertNotEqual(context_user2, context_user3)
+
+    def test_user_can_unfollow(self):
+        """Авторизованный пользователь может отписываться"""
         follow_count_before = Follow.objects.count()
         self.authorized_client2.get(
             reverse(
                 'posts:profile_unfollow',
-                kwargs={'username': PostViewsTests.user}
+                kwargs={'username': PostViewsTests.user_3}
             )
         )
         follow_count_after = Follow.objects.count()
