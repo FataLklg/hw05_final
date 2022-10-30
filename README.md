@@ -49,6 +49,3 @@ python3 manage.py migrate
 ```
 python3 manage.py runserver
 ```
-### Авторы:
-___
-- ##### __Антон Тарасов__
