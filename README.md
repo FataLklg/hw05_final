@@ -1,4 +1,4 @@
-# hw05_final
+# Yatube
 ____
 ###### Блог Yatube, в котором реализованы следующие возможности:
 + _создание постов, с выбором подходящей группы и их последующее редактирование (CRUD) автором поста_
@@ -21,15 +21,15 @@ cd hw05_final
 Cоздать и активировать виртуальное окружение:
 
 ```
-python3 -m venv venv
+python -m venv venv
 ```
 
 ```
-source venv/bin/activate
+source venv/Scripts/activate
 ```
 
 ```
-python3 -m pip install --upgrade pip
+python -m pip install --upgrade pip
 ```
 
 Установить зависимости из файла requirements.txt:
@@ -41,11 +41,12 @@ pip install -r requirements.txt
 Выполнить миграции:
 
 ```
-python3 manage.py migrate
+cd yatube/
+python manage.py migrate
 ```
 
 Запустить проект:
 
 ```
-python3 manage.py runserver
+python manage.py runserver
 ```
